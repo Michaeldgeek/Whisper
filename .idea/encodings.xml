@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding">
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/AndroidUtilities.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/App.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/Constants.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/NativeLoader.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/NotificationCenter.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/widgets/ChatLayout.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/widgets/Emoji.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/widgets/EmojiView.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/widgets/PagerSlidingTabStrip.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/challenge/magnet/android/whisper/widgets/SizeNotifierRelativeLayout.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/background.jpg" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/background2.jpg" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/background_tab.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/chat_divider.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_emoji_backspace.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_emoji_bell.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_emoji_car.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_emoji_flower.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_emoji_recent.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_emoji_smile.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/ic_emoji_symbol.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/list_selector.xml" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/app/src/main/res/drawable/transparent.xml" charset="windows-1252" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>

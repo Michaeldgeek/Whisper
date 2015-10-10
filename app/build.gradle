@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    defaultConfig {
+        applicationId "challenge.magnet.android.whisper"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled = true
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    lintOptions {
+        abortOnError false
+    }
+    sourceSets.main {
+        jniLibs.srcDir 'libs'
+        jni.srcDirs = [] //disable automatic ndk-build call
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.yalantis:contextmenu:1.0.4'
+    compile('com.afollestad.material-dialogs:core:0.8.1.0@aar') {
+        transitive = true
+    }
+    compile 'com.kbeanie:image-chooser-library:1.5.0@aar'
+    compile 'ly.kite:instagram-photo-picker:1.+'
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.4'
+    compile 'com.sromku:simple-fb:4.0.8'
+    compile 'de.hdodenhof:circleimageview:2.0.0'
+    compile files('libs/android-viewbadger.jar')
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.android.support:cardview-v7:23.0.1'
+    compile 'com.google.android.gms:play-services-base:7.8.0'
+    compile 'com.google.android.gms:play-services-maps:7.8.0'
+    compile 'com.google.android.gms:play-services-location:7.8.0'
+    compile 'com.google.android.gms:play-services-gcm:7.8.0'
+    compile('com.magnet.mmx:magnet-mmx-client-android:1.9.1@aar') {
+        transitive = true
+    }
+}
+repositories {
+    maven { url 'http://yanzm.github.io/MaterialTabHost/repository' }
+}
+
+dependencies {
+    compile 'com.loopj.android:android-async-http:1.4.9'
+}
+dependencies {
+    compile 'net.yanzm:mth:1.0.4'
+}
+repositories {
+    mavenCentral()
+}
+dependencies {
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
+}

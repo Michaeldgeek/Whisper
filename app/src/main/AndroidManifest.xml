@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="challenge.magnet.android.whisper" >
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"></uses-permission>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <permission android:name="challenge.magnet.android.whisper.permission.C2D_MESSAGE"
+        android:protectionLevel="signature"/>
+    <uses-permission android:name="challenge.magnet.android.whisper.permission.C2D_MESSAGE" />
+
+    <application
+        android:name=".App"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
+        <activity
+            android:name=".ChatActivity"
+            android:label="@string/app_name" >
+
+        </activity>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
+        <activity android:name=".activities.MapViewActivity"/>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyCF_aAIEQ5DwOZ6D5wpbf_bNOnUiwMjUic"/>
+
+        <activity android:name=".activities.ImageViewActivity" />
+        <activity android:name=".activities.VideoViewActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/app_name" >
+
+        </activity>
+        <activity android:name=".activities.FindFriendsSetup"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <receiver android:name="com.magnet.mmx.client.MMXGcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <category android:name="challenge.magnet.android.whisper" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Broadcast.MessageRecieverWakeUp" android:exported="false">
+            <intent-filter>
+                <action android:name="MY_WAKEUP_ACTION" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
