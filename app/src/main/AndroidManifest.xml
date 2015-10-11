@@ -11,6 +11,7 @@
     <permission android:name="challenge.magnet.android.whisper.permission.C2D_MESSAGE"
         android:protectionLevel="signature"/>
     <uses-permission android:name="challenge.magnet.android.whisper.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".App"
@@ -49,12 +50,40 @@
         </activity>
         <activity android:name=".activities.FindFriendsSetup"
             android:label="@string/app_name">
+
+        </activity>
+        <activity
+            android:name=".activities.IntroActivity"
+            android:label="@string/app_name"
+            android:theme="@style/NoTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".activities.LoginActivity"
+            android:label="@string/title_activity_login"
+            android:noHistory="true">
+        </activity>
+        <activity
+            android:name=".activities.RegistrationActivity"
+            android:label="@string/title_activity_registration"
+            android:noHistory="true">
+            </activity>
+        <activity
+            android:name=".activities.LoginLoadingActivity"
+            android:label="@string/title_activity_registration"
+            android:noHistory="true">
+        </activity>
+        <activity
+            android:name=".activities.WhisperersActivity"
+            android:label="@string/title_activity_whisperers" >
+        </activity>
+
+
         <receiver android:name="com.magnet.mmx.client.MMXGcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>

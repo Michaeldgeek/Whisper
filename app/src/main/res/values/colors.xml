@@ -8,9 +8,23 @@
     <color name="orange">@android:color/holo_blue_light</color>
     <color name="background_tab_pressed">#6633B5E5</color>
     <color name="text_color">#222222</color>
-
-
+    <!--button colors-->
+    <color name="login_help_button_label">#E0E0E0</color>
+    <color name="login_help_button_label_push">#AAAAAA</color>
+    <color name="login_help_button_label_focus">#CCCCCC</color>
     <color name="actionbar_color">@color/md_blue_grey_500</color>
+    <integer-array name="colors">
+        <item>@color/holo_blue_dark</item>
+        <item>@color/holo_yellow_dark</item>
+        <item>@color/holo_green_dark</item>
+        <item>@color/holo_purple_dark</item>
+        <item>@color/holo_red_dark</item>
+    </integer-array>
+    <color name="holo_blue_dark">#0099cc</color>
+    <color name="holo_yellow_dark">#ff8800</color>
+    <color name="holo_green_dark">#669900</color>
+    <color name="holo_purple_dark">#9933cc</color>
+    <color name="holo_red_dark">#cc0000</color>
 
     <!-- Material design colors-->
 

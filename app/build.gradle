@@ -67,3 +67,13 @@ repositories {
 dependencies {
     compile 'com.facebook.android:facebook-android-sdk:4.6.0'
 }
+dependencies {
+    compile 'com.github.paolorotolo:appintro:3.2.0'
+    compile 'com.rengwuxian.materialedittext:library:2.1.4'
+    compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.0'
+    compile 'com.github.dmytrodanylyk.android-process-button:library:1.0.4'
+    compile 'jp.wasabeef:recyclerview-animators:1.2.0@aar'
+    compile 'info.hoang8f:fbutton:1.0.5'
+    compile 'com.github.castorflex.smoothprogressbar:library:1.1.0'
+    compile 'com.android.support:design:23.0.1'
+}

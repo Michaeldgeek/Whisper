@@ -34,5 +34,10 @@
     <string name="action_search">Search</string>
     <string name="chat_facebook_frnds">Chat with Facebook friends</string>
     <string name="note_below_invite">Connect with your friends on Whisper. Select the social network and connect.</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_registration">Registration</string>
+    <string name="title_activity_whisperers">Whisperers</string>
+    <string name="logging_in">Logging In</string>
 
 </resources>
