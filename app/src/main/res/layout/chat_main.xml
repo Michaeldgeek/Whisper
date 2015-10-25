@@ -39,7 +39,8 @@
                 android:id="@+id/emojiButton"
                 android:layout_alignBottom="@+id/chat_edit_text1"
                 android:layout_marginBottom="8dp"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
             <EditText
                 android:layout_marginTop="8dp"

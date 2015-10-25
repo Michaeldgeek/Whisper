@@ -43,6 +43,7 @@ public class UsersRecyclerViewAdapter extends RecyclerView.Adapter<UsersRecycler
         Intent intent;
         intent = new Intent(mActivity, ChatActivity.class);
         intent.putExtra("User", targetUser);
+        intent.putExtra("set", "true");
         mActivity.startActivity(intent);
     }
 

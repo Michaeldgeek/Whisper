@@ -7,7 +7,19 @@
         app:showAsAction="never" />
     <item android:id="@+id/action_search"
         android:title="@string/action_search"
-        android:orderInCategory="1"
+        android:orderInCategory="4"
         android:icon="@drawable/ic_action_search"
         app:showAsAction="always" />
+    <item android:id="@+id/action_new_group"
+        android:title="New group"
+        android:orderInCategory="3"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_new_broadcast"
+        android:title="New broadcast"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_new_chat"
+        android:title="New chat"
+        android:orderInCategory="1"
+        app:showAsAction="never" />
 </menu>

@@ -1,6 +1,12 @@
+/*
+* This activity has the following states
+ * 1. User provides details
+ * 2. attempt login. If successful, save user login details in pref file else show retry
+ * 3. check if find friends has run b4. if yes, take user to main activity else take user to find friends
+*/
 package challenge.magnet.android.whisper.activities;
 
-import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -11,17 +17,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.dd.processbutton.iml.ActionProcessButton;
 import com.magnet.mmx.client.api.MMX;
 
+import challenge.magnet.android.whisper.MainActivity;
 import challenge.magnet.android.whisper.R;
 
 public class LoginActivity extends AppCompatActivity {
@@ -38,20 +42,14 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //checkLoginStatus();
         setContentView(R.layout.activity_login);
-        //GET YOUR WHISPER.PROPERTIES FROM YOUR SANDBOX INTO THE RAW FOLDER, THEN UNCOMMENT THIS SECTION
-        //TO PREVENT APP FROM CRASHING
-
-        // whisper.properties configures Magnet Message endpoints
          coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                 .coordinatorLayout);
             ActionBar actionBar = getSupportActionBar();
             if(actionBar != null) {
                 actionBar.hide();
             }
-
+        //state 1 fetch user details.
             userName = (EditText) findViewById(R.id.login_username_input);
             password = (EditText) findViewById(R.id.login_password_input);
 
@@ -71,7 +69,7 @@ public class LoginActivity extends AppCompatActivity {
                                                     btnLogIn.setProgress(1);
                                                     username_str = userName.getText().toString().trim();
                                                     password_str = password.getText().toString().getBytes();
-                                                    attemptLogin(username_str, password_str);
+                                                    attemptLogin(username_str, password_str); // state 2 attempt login
                                                 }
                                             }
                                         }
@@ -91,10 +89,17 @@ public class LoginActivity extends AppCompatActivity {
     private void attemptLogin(final String user, final byte[] pass) {
         MMX.login(user, pass, new MMX.OnFinishedListener<Void>() {
             public void onSuccess(Void aVoid) {
-                //if an EventListener has already been registered, start receiving messages
-                MMX.start();
-                goToWhispererSelectActivity();
-                LoginActivity.this.finish(); //prevents going back to this activity after successful login
+
+                // save user login details in pref file
+                storeLoginDetailsInPref(username_str, password.getText().toString());
+                if(isFindFriendRun()){
+                    // state 3. user already has friends. go to Mainactivity
+                    goToMainActivity();
+                }
+                else{
+                    // state 4. user has no friends. go to find friends activity
+                    goToFindFriendsActivity();
+                }
             }
 
             public void onFailure(MMX.FailureCode failureCode, Throwable throwable) {
@@ -105,7 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                     LoginActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            showRetry("Incorrect username and/or password ",user,pass,btnLogIn);
+                            showRetry("Incorrect username and/or password ",userName.getText().toString(),password.getText().toString().getBytes(),btnLogIn);
                             btnLogIn.setProgress(0);
                             // show snack bar for user to retry
                         }
@@ -134,6 +139,29 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    private void goToFindFriendsActivity() {
+        Intent intent;
+        intent = new Intent(LoginActivity.this, FindFriendsSetup.class);
+        startActivity(intent);
+    }
+
+    private void goToMainActivity() {
+        Intent intent;
+        intent = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private boolean isFindFriendRun() {
+        SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.user_login_details), Context.MODE_PRIVATE);
+        String s = sharedPref.getString(getString(R.string.isFindFnds), "false");
+        if(s.contains("true")){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
     private void showRetry(String message, final String user, final byte[] pass, final ActionProcessButton btnLogIn) {
         Snackbar snackbar = Snackbar
                 .make(coordinatorLayout, message, Snackbar.LENGTH_INDEFINITE)
@@ -160,5 +188,14 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void storeLoginDetailsInPref(String user_name, String password) {
+        SharedPreferences sharedPref = this.getSharedPreferences(getString(R.string.user_login_details), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.username),user_name);
+        editor.putString(getString(R.string.password), password);
+        editor.commit();
+
+
+    }
 
 }

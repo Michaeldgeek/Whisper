@@ -5,6 +5,7 @@
         <item name="colorPrimary">@color/actionbar_color</item>
         <item name="colorAccent">@color/md_blue_grey_50</item>
         <item name="android:windowContentOverlay">@null</item>
+
     </style>
 
 

@@ -35,9 +35,8 @@ public class ImageViewActivity extends AppCompatActivity {
 
         String imageUrl = getIntent().getStringExtra("imageUrl");
         ivMessageImage = (TouchImageView) findViewById(R.id.ivMessageImage);
-        boolean isInstagram = getIntent().getBooleanExtra("isInstagram", false);
-        if (imageUrl != null) {
-            if(isInstagram){
+       if (imageUrl != null) {
+            if(imageUrl.contains("http://")){
                 Picasso.with(this).load(imageUrl).into(ivMessageImage);
             }
             else {

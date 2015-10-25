@@ -22,8 +22,12 @@
         android:largeHeap="true">
         <activity
             android:name=".ChatActivity"
-            android:label="@string/app_name" >
+            android:parentActivityName=".MainActivity"
+            >
 
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainActivity" />
         </activity>
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -46,12 +50,12 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
-
-        </activity>
+            </activity>
         <activity android:name=".activities.FindFriendsSetup"
             android:label="@string/app_name">
 
         </activity>
+
         <activity
             android:name=".activities.IntroActivity"
             android:label="@string/app_name"
@@ -61,28 +65,35 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <activity
             android:name=".activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:noHistory="true">
+            >
         </activity>
         <activity
             android:name=".activities.RegistrationActivity"
             android:label="@string/title_activity_registration"
-            android:noHistory="true">
-            </activity>
+            >
+
+        </activity>
         <activity
             android:name=".activities.LoginLoadingActivity"
             android:label="@string/title_activity_registration"
-            android:noHistory="true">
+            >
+
         </activity>
         <activity
             android:name=".activities.WhisperersActivity"
             android:label="@string/title_activity_whisperers" >
         </activity>
+        <activity
+            android:name=".activities.ShowFriends"
+            android:label="@string/title_activity_whisperers" >
 
+        </activity>
 
         <receiver android:name="com.magnet.mmx.client.MMXGcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -97,6 +108,10 @@
                 <action android:name="MY_WAKEUP_ACTION" />
             </intent-filter>
         </receiver>
+        <provider
+            android:authorities="challenge.magnet.android.whisper.provider"
+            android:name=".providers.RecentChatProvider"
+            android:exported="false" />
     </application>
 
 </manifest>

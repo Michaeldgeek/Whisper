@@ -3,6 +3,9 @@ package challenge.magnet.android.whisper.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import challenge.magnet.android.whisper.R;
+
+
 public class User implements Parcelable {
 
     public User() { }
@@ -10,6 +13,7 @@ public class User implements Parcelable {
     private String id;
     private String email;
     private String username;
+    private int profilePic = R.drawable.avatar;
 
     public String getId() {
         return id;
@@ -35,10 +39,19 @@ public class User implements Parcelable {
         this.username = username;
     }
 
+    public int getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(int profilePic) {
+        this.profilePic = profilePic;
+    }
+
     protected User(Parcel in) {
         id = in.readString();
         email = in.readString();
         username = in.readString();
+        profilePic = in.readInt();
     }
 
     @Override
@@ -51,6 +64,7 @@ public class User implements Parcelable {
         dest.writeString(id);
         dest.writeString(email);
         dest.writeString(username);
+        dest.writeInt(profilePic);
     }
 
     @SuppressWarnings("unused")

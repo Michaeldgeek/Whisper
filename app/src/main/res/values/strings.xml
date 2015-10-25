@@ -27,17 +27,24 @@
     <string name="title_photo_src">Photo Source</string>
     <string name="title_video_src">Video Source</string>
     <string name="app_id">541924792627031</string>
-    <string name="title_events">Events</string>
+    <string name="title_whisperers">Whisperers</string>
     <string name="title_chats">Chats</string>
     <string name="title_find_friends">Find Friends</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
     <string name="chat_facebook_frnds">Chat with Facebook friends</string>
-    <string name="note_below_invite">Connect with your friends on Whisper. Select the social network and connect.</string>
+    <string name="note_below_invite">Connect with your friends on other social network. </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_registration">Registration</string>
     <string name="title_activity_whisperers">Whisperers</string>
     <string name="logging_in">Logging In</string>
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="user_login_details">user_login_details</string>
+    <string name="isFindFnds">isFindFrnds</string>
+    <string name="fbid">fbid</string>
+    <string name="find_frnds_completed">findFrndsCompleted</string>
+    <string name="instaid">instagramId</string>
 
 </resources>

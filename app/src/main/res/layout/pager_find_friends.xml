@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinatorLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    >
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FFFFFF">
+   >
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -11,23 +19,24 @@
         tools:context=".MainActivity$PlaceholderFragment">
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:background="#FAFAFA"
+        android:layout_height="160dp"
+        android:background="#1C2027"
         >
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:background="@drawable/circle_text_search"
             android:src="@drawable/search"
             android:padding="20dp"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="25dp"
             android:adjustViewBounds="true"
             android:id="@+id/find_frnds"
             />
     </FrameLayout>
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="100dp"
+            android:layout_height="wrap_content"
             android:background="#FFFFFF"
             >
             <TextView
@@ -35,83 +44,52 @@
                 android:layout_height="wrap_content"
                 android:text="@string/note_below_invite"
                 android:id="@+id/note_below_invite"
-                android:layout_gravity="center"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:gravity="center_horizontal"
+                android:layout_marginTop="27dp"
                 android:textColor="#8B8B8B"
                 android:textSize="18sp"
+                android:gravity="center"
                 />
             </FrameLayout>
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:paddingTop="30dp"
+            android:orientation="vertical"
             android:background="#FFFFFF">
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/circle_text_fb"
-                android:src="@drawable/com_facebook_button_icon"
-                android:padding="20dp"
+            <Button
                 android:id="@+id/fb"
-                android:layout_marginRight="10dp"
-                android:layout_marginLeft="10dp"
-                android:layout_alignParentLeft="true"
-                android:adjustViewBounds="true"
-
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/invite_friends"
+                android:layout_marginRight="@dimen/invite_friends"
+                android:text="Find your Facebook Friends"
+                android:gravity="center"
+                android:textColor="@color/md_white_1000"
+                android:textSize="14sp"
+                android:background="@drawable/com_facebook_button_background"
+                android:layout_marginBottom="10dp"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fb"
-                android:layout_alignLeft="@+id/fb"
-                android:textSize="18sp"
-                android:textColor="#8B8B8B"
-                android:text="Facebook"/>
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/circle_text_contact"
-                android:src="@drawable/ic_action_call"
-                android:padding="20dp"
-                android:layout_centerHorizontal="true"
-                android:adjustViewBounds="true"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:id="@+id/contacts"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/contacts"
-                android:layout_alignLeft="@+id/contacts"
-                android:textSize="18sp"
-                android:textColor="#8B8B8B"
-                android:text="Contacts"/>
-            <ImageView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:background="@drawable/circle_text_instagram"
-                android:src="@drawable/instagram"
-                android:padding="20dp"
-                android:layout_marginLeft="10dp"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
-                android:adjustViewBounds="true"
+            <Button
                 android:id="@+id/instagram"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/invite_friends"
+                android:layout_marginRight="@dimen/invite_friends"
+                android:text="Connect with Instagram"
+                android:gravity="center"
+                android:textColor="@color/md_white_1000"
+                android:textSize="14sp"
+                android:background="@drawable/instagram_bg"
+                android:layout_marginBottom="10dp"
                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/instagram"
-                android:layout_alignLeft="@+id/instagram"
-                android:textSize="18sp"
-                android:textColor="#8B8B8B"
-                android:text="Instagram"/>
 
-        </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
     </ScrollView>
+    </android.support.design.widget.CoordinatorLayout>

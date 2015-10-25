@@ -72,6 +72,7 @@
             android:layout_alignParentLeft="true"
             android:id="@+id/delivered_icon"
             android:layout_centerVertical="true"
+            android:visibility="invisible"
             />
 
         <TextView
@@ -100,6 +101,7 @@
             android:layout_margin="5dp"
             android:layout_centerVertical="true"
             android:id="@+id/circle_text"
+            android:visibility="invisible"
             />
     </RelativeLayout>
     <View

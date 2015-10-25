@@ -1,5 +1,6 @@
 package challenge.magnet.android.whisper.activities;
 
+
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import challenge.magnet.android.whisper.adapters.UsersRecyclerViewAdapter;
 import challenge.magnet.android.whisper.models.User;
 import jp.wasabeef.recyclerview.animators.adapters.SlideInBottomAnimationAdapter;
 
+
 public class WhisperersActivity extends AppCompatActivity {
 
     final String TAG = "WhisperersActivity";
@@ -34,23 +36,21 @@ public class WhisperersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whisperers);
-
         if (MMX.getCurrentUser() == null) {
             MMX.logout(null);
             Intent intent = new Intent(WhisperersActivity.this, LoginActivity.class);
             startActivity(intent);
         }
-
-        rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
-
-        userlist = new ArrayList<>();
-        adapter = new UsersRecyclerViewAdapter(this, userlist);
-        rvUsers.setAdapter(new SlideInBottomAnimationAdapter(adapter));
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        rvUsers.setLayoutManager(layoutManager);
-
-        updateViewState();
+    else {
+            rvUsers = (RecyclerView) findViewById(R.id.rvUsers);
+            userlist = new ArrayList<>();
+            adapter = new UsersRecyclerViewAdapter(this, userlist);
+            rvUsers.setAdapter(new SlideInBottomAnimationAdapter(adapter));
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            rvUsers.setLayoutManager(layoutManager);
+            updateViewState();
+        }
     }
 
     private void updateViewState() {

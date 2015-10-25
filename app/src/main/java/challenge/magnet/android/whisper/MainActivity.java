@@ -1,19 +1,28 @@
 package challenge.magnet.android.whisper;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.CursorLoader;
+import android.support.v4.content.Loader;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.ListView;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.sromku.simple.fb.SimpleFacebook;
@@ -21,9 +30,18 @@ import com.sromku.simple.fb.SimpleFacebookConfiguration;
 
 import net.yanzm.mth.MaterialTabHost;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
-import challenge.magnet.android.whisper.adapters.ChatAdapter;
+import challenge.magnet.android.whisper.activities.FindFriendsSetup;
+import challenge.magnet.android.whisper.activities.LoginActivity;
+import challenge.magnet.android.whisper.activities.ShowFriends;
+import challenge.magnet.android.whisper.adapters.RecentChatAdapterDir.MyListCursorAdapter;
+import challenge.magnet.android.whisper.databases.TablesDefn.RecentChatTableDefnDB;
+import challenge.magnet.android.whisper.databases.TablesDefn.UserTableDefn;
+import challenge.magnet.android.whisper.databases.TablesDefn.WhisperDB;
+import challenge.magnet.android.whisper.models.FbUser;
 
 /**
  * According to facebook documentation,
@@ -64,7 +82,7 @@ public class MainActivity extends AppCompatActivity  {
         final ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
         viewPager.setOnPageChangeListener(tabHost);
-        viewPager.setCurrentItem(1); // Added this line myself so that the tab is set to chat tab when run.
+        viewPager.setCurrentItem(0); // Added this line myself so that the tab is set to chat tab when run.
 
         tabHost.setOnTabChangeListener(new MaterialTabHost.OnTabChangeListener() {
             @Override
@@ -80,7 +98,11 @@ public class MainActivity extends AppCompatActivity  {
         super.onResume();
         mSimpleFacebook = SimpleFacebook.getInstance(this);
     }
-    
+
+
+
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -94,13 +116,20 @@ public class MainActivity extends AppCompatActivity  {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id)
+        {
+            case R.id.action_new_chat :
+                startNewChat();
+                break;
+            case R.id.action_settings :
+                //this.startActivity(new Intent(this,SettingsActivity.class));
+                break;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    private void startNewChat() {
+        startActivity(new Intent(this, ShowFriends.class));
     }
 
     public void initFacebook() {
@@ -119,7 +148,6 @@ public class MainActivity extends AppCompatActivity  {
     }
 
 
-
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -135,8 +163,8 @@ public class MainActivity extends AppCompatActivity  {
 
         @Override
         public int getCount() {
-            // Show 3 total pages.
-            return 3;
+            // Show 2 total pages.
+            return 2;
         }
 
         @Override
@@ -144,27 +172,32 @@ public class MainActivity extends AppCompatActivity  {
             Locale l = Locale.getDefault();
             switch (position) {
                 case 0:
-                    return getString(R.string.title_events).toUpperCase(l);
-                case 1:
-                    return getString(R.string.title_chats).toUpperCase(l);
-                case 2:
+                    return getString(R.string.title_whisperers).toUpperCase(l);
+                 case 1:
                     return getString(R.string.title_find_friends).toUpperCase(l);
             }
             return null;
         }
     }
 
-    public static class PlaceholderFragment extends Fragment  {
+    public static class PlaceholderFragment extends Fragment implements
+            LoaderManager.LoaderCallbacks<Cursor> {
         /**
          * The fragment argument representing the section number for this
          * fragment.
          */
+        private static final int URL_LOADER = 0;
         private static final String ARG_SECTION_NUMBER = "section_number";
-
+        private Cursor cursor;
+        RecyclerView chatRv;
+        RecyclerView whispererRv;
+        MyListCursorAdapter cursorAdapter;
         /**
          * Returns a new instance of this fragment for the given section
          * number.
          */
+
+
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();
             Bundle args = new Bundle();
@@ -177,43 +210,61 @@ public class MainActivity extends AppCompatActivity  {
         }
 
         @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+        public void onActivityCreated(Bundle savedInstanceState) {
+            super.onActivityCreated(savedInstanceState);
+            getLoaderManager().initLoader(URL_LOADER, savedInstanceState, this);
+        }
+
+        private  String getUsername() {
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.user_login_details), Context.MODE_PRIVATE);
+            String username = sharedPref.getString(getString(R.string.username), "notfound");
+            if(username.contains("notfound")){
+                Toast.makeText(getActivity(),"Login credentials expired",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getActivity(), LoginActivity.class));
+                return "";
+            }
+            else {
+                return username;
+            }
+        }
+
+
+
+        @Override
+        public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             View rootView;
-            if (getArguments().getInt(ARG_SECTION_NUMBER)== 1) {
-                // Facebook Fragment
-                rootView = inflater.inflate(R.layout.pager_facebook, container, false);
-                return rootView;
-            }
-            else if (getArguments().getInt(ARG_SECTION_NUMBER)== 2) {
+             if (getArguments().getInt(ARG_SECTION_NUMBER)== 1) {
                 // Chat Fragment
                 rootView = inflater.inflate(R.layout.pager_chats, container, false);
-                ListView chat_listView = (ListView) rootView.findViewById(R.id.chat_list);
-                chat_listView.setAdapter(new ChatAdapter(getActivity()));
+                chatRv = (RecyclerView) rootView.findViewById(R.id.chat_list);
+                cursorAdapter = new MyListCursorAdapter(getActivity(),cursor);
+                chatRv.setAdapter(cursorAdapter);
+                final LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                chatRv.setLayoutManager(layoutManager);
                 return rootView;
+
             }
             else {
                 rootView = inflater.inflate(R.layout.pager_find_friends, container, false);
                 if(rootView != null){
-                    ImageView fb = (ImageView) rootView.findViewById(R.id.fb);
+                    Button fb = (Button) rootView.findViewById(R.id.fb);
                     fb.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(getActivity(),"fb", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getActivity(),FindFriendsSetup.class);
+                            intent.putExtra("fb","1");
+                            getActivity().startActivity(intent);
                         }
                     });
-                    ImageView contacts = (ImageView) rootView.findViewById(R.id.contacts);
-                    contacts.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Toast.makeText(getActivity(),"co", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                    ImageView insta = (ImageView) rootView.findViewById(R.id.instagram);
+                    Button insta = (Button) rootView.findViewById(R.id.instagram);
                     insta.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(getActivity(),"in", Toast.LENGTH_LONG).show();
+                            Intent intent = new Intent(getActivity(),FindFriendsSetup.class);
+                            intent.putExtra("insta","2");
+                            getActivity().startActivity(intent);
                         }
                     });
                 }
@@ -222,5 +273,42 @@ public class MainActivity extends AppCompatActivity  {
         }
 
 
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            switch (id) {
+                case URL_LOADER:
+                    // Returns a new CursorLoader
+                    return new CursorLoader(
+                            getActivity(),   // Parent activity context
+                            Uri.parse(Constants.RECENT_CHAT_PROVIDER_AUTORITY +"/" + RecentChatTableDefnDB.RecentChatTableDfn.TABLE_NAME),        // Table to query
+                            new String[]{RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_USER
+                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_UNREAD_COUNT
+                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_PROFILE_PIC
+                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_MESSAGE
+                                    , RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DATE
+                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DELIVERED
+                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_NETWORK
+                                    , RecentChatTableDefnDB.RecentChatTableDfn._ID},     // Projection to return
+                            null,            // No selection clause
+                            null,            // No selection arguments
+                            null             // Default sort order
+                    );
+                default:
+                    // An invalid id was passed in
+                    return null;
+            }
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            if(data != null) {
+                cursorAdapter.changeCursor(data);
+            }
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+           cursorAdapter.changeCursor(null);
+        }
     }
 }

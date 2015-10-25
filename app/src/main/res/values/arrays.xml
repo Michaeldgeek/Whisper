@@ -3,15 +3,12 @@
     <string-array name="items_photo">
         <item>Gallery</item>
         <item>Camera</item>
-        <item>Facebook</item>
         <item>Instagram</item>
     </string-array>
 
     <string-array name="items_video">
         <item>Storage</item>
         <item>Camera</item>
-        <item>Youtube</item>
-
     </string-array>
     <string-array name="txt_long_click">
        <item>Copy Text</item>

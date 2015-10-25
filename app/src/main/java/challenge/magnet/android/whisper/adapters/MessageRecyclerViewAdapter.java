@@ -27,11 +27,13 @@ import com.magnet.mmx.client.api.MMXUser;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import challenge.magnet.android.whisper.R;
 import challenge.magnet.android.whisper.activities.ImageViewActivity;
 import challenge.magnet.android.whisper.activities.MapViewActivity;
+import challenge.magnet.android.whisper.activities.ShowFriends;
 import challenge.magnet.android.whisper.activities.VideoViewActivity;
 import challenge.magnet.android.whisper.models.MessageImage;
 import challenge.magnet.android.whisper.models.MessageMap;
@@ -44,9 +46,9 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private static final int IMAGE_TYPE = 1;
     private static final int MAP_TYPE = 2;
     private static final int VIDEO_TYPE = 3;
-
     private List<Object> messageItems;
     public Activity mActivity;
+
 
     public MessageRecyclerViewAdapter(Activity activity, List<Object> items) {
         this.messageItems = items;
@@ -56,11 +58,15 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     class ViewHolderText extends RecyclerView.ViewHolder implements View.OnLongClickListener {
         public TextView tvMessageText;
         private RelativeLayout wrapper;
+        private TextView date;
+        private ImageView replyStatus;
 
         public ViewHolderText(View itemView) {
             super(itemView);
             this.wrapper = (RelativeLayout) itemView.findViewById(R.id.wrapper);
             this.tvMessageText = (TextView) itemView.findViewById(R.id.message_text);
+            this.date = (TextView)itemView.findViewById(R.id.time_text);
+            this.replyStatus = (ImageView)itemView.findViewById(R.id.user_reply_status);
             this.wrapper.setOnLongClickListener(this);
         }
 
@@ -81,6 +87,11 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
                                         ClipData clip = ClipData.newPlainText(ClipDescription.MIMETYPE_TEXT_PLAIN, textView.getText().toString());
                                         clipboard.setPrimaryClip(clip);
                                         Toast.makeText(mActivity, "Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                                    }
+                                    else if(i == 2) {
+                                        //forward
+                                        Intent intent = new Intent(mActivity, ShowFriends.class);
+                                        mActivity.startActivity(intent);
                                     }
                                 }
                             }).show();
@@ -107,12 +118,8 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         public void onClick(View view) {
             if (messageItems.size() > 0) {
                 MessageImage item = (MessageImage) messageItems.get(getAdapterPosition());
-                if(item.isInstagram) {
-                    goToImageViewActivity(item.imageUrl,true);
-                }
-                else {
-                    goToImageViewActivity(item.imageUrl,false);
-                }
+                 goToImageViewActivity(item.getText());
+
             }
         }
 
@@ -137,7 +144,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         public void onClick(View view) {
             if (messageItems.size() > 0) {
                 MessageMap item = (MessageMap) messageItems.get(getAdapterPosition());
-                goToMapViewActivity(item.latlng);
+                goToMapViewActivity(item.getLatlng());
             }
         }
     }
@@ -157,7 +164,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         public void onClick(View view) {
             if (messageItems.size() > 0) {
                 MessageVideo item = (MessageVideo) messageItems.get(getAdapterPosition());
-                goToVideoViewActivity(item.videoUrl);
+                goToVideoViewActivity(item.getVideoUrl());
             }
         }
     }
@@ -232,24 +239,33 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private void configureViewHolder1(ViewHolderText vh, int position) {
         MessageText item = (MessageText) messageItems.get(position);
            if (item != null) {
-               vh.tvMessageText.setText(item.text);
-               vh.wrapper.setGravity(item.left ? Gravity.LEFT : Gravity.RIGHT);
-               vh.wrapper.findViewById(R.id.bubble).setBackgroundResource(item.left ? R.drawable.balloon_incoming_normal : R.drawable.balloon_outgoing_normal);
-        }
+               vh.tvMessageText.setText(item.getText());
+               vh.wrapper.setGravity(item.isLeft() ? Gravity.LEFT : Gravity.RIGHT);
+               vh.wrapper.findViewById(R.id.bubble).setBackgroundResource(item.isLeft() ? R.drawable.balloon_incoming_normal : R.drawable.balloon_outgoing_normal);
+               vh.date.setText(item.getDate());
+                if(item.isSent() ){
+                    vh.replyStatus.setImageResource(R.drawable.ic_single_tick);
+
+                }
+               if(item.isDelivered()) {
+                   vh.replyStatus.setImageResource(R.drawable.ic_double_tick);
+                   //item.setDelivered(false);
+               }
+           }
     }
 
     private void configureViewHolder2(ViewHolderImage vh, int position) {
         MessageImage item = (MessageImage) messageItems.get(position);
         if (item != null) {
             //vh.ivMessageImage.setBackgroundResource(item.left ? R.drawable.bubble_yellow : R.drawable.bubble_green);
-            vh.wrapper.setGravity(item.left ? Gravity.LEFT : Gravity.RIGHT);
-            if(item.isInstagram){
-               Picasso.with(mActivity).load(item.imageUrl).into(vh.ivMessageImage);
+            vh.wrapper.setGravity(item.isLeft() ? Gravity.LEFT : Gravity.RIGHT);
+            if(item.getText().contains("http://")){
+               Picasso.with(mActivity).load(item.getText()).into(vh.ivMessageImage);;
             }
             else {
-                Picasso.with(mActivity).load(Uri.fromFile(new File(item.imageUrl))).into(vh.ivMessageImage);
+                Picasso.with(mActivity).load(Uri.fromFile(new File(item.getText()))).into(vh.ivMessageImage);
             }
-            Log.i("image",item.imageUrl);
+
         }
     }
 
@@ -257,8 +273,8 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         final MessageMap item = (MessageMap) messageItems.get(position);
         if (item != null) {
             //vh.ivMessageLocation.setBackgroundResource(item.left ? R.drawable.bubble_yellow : R.drawable.bubble_green);
-            vh.wrapper.setGravity(item.left ? Gravity.LEFT : Gravity.RIGHT);
-            String loc = "http://maps.google.com/maps/api/staticmap?center="+item.latlng+"&zoom=18&size=700x300&sensor=false&markers=color:blue%7Clabel:S%7C"+item.latlng;
+            vh.wrapper.setGravity(item.isLeft() ? Gravity.LEFT : Gravity.RIGHT);
+            String loc = "http://maps.google.com/maps/api/staticmap?center="+item.getLatlng()+"&zoom=18&size=700x300&sensor=false&markers=color:blue%7Clabel:S%7C"+item.getLatlng();
             Picasso.with(mActivity).load(loc).into(vh.ivMessageLocation);
         }
     }
@@ -267,7 +283,7 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         final MessageVideo item = (MessageVideo) messageItems.get(position);
         if (item != null) {
             //vh.ivVideoPlayButton.setBackgroundResource(item.left ? R.drawable.bubble_yellow : R.drawable.bubble_green);
-            vh.wrapper.setGravity(item.left ? Gravity.LEFT : Gravity.RIGHT);
+            vh.wrapper.setGravity(item.isLeft() ? Gravity.LEFT : Gravity.RIGHT);
         }
     }
 
@@ -278,11 +294,10 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         mActivity.startActivity(intent);
     }
 
-    public void goToImageViewActivity(String url,boolean isInstagram) {
+    public void goToImageViewActivity(String url) {
         Intent intent;
         intent = new Intent(mActivity, ImageViewActivity.class);
         intent.putExtra("imageUrl", url);
-        intent.putExtra("isInstagram", isInstagram);
         mActivity.startActivity(intent);
     }
 
@@ -297,5 +312,6 @@ public class MessageRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public void add(Object obj) {
         messageItems.add(obj);
     }
+
 
 }
