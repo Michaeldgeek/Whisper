@@ -228,6 +228,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
 
     private void attemptLogin(String user, byte[] pass) {
+        finish();
         Intent intent = new Intent(this,LoginLoadingActivity.class);
         startActivity(intent);
 

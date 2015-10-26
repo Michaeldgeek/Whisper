@@ -140,12 +140,14 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void goToFindFriendsActivity() {
+        finish();
         Intent intent;
         intent = new Intent(LoginActivity.this, FindFriendsSetup.class);
         startActivity(intent);
     }
 
     private void goToMainActivity() {
+        finish();
         Intent intent;
         intent = new Intent(LoginActivity.this, MainActivity.class);
         startActivity(intent);

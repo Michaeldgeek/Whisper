@@ -282,12 +282,8 @@ public class MainActivity extends AppCompatActivity  {
                             getActivity(),   // Parent activity context
                             Uri.parse(Constants.RECENT_CHAT_PROVIDER_AUTORITY +"/" + RecentChatTableDefnDB.RecentChatTableDfn.TABLE_NAME),        // Table to query
                             new String[]{RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_USER
-                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_UNREAD_COUNT
-                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_PROFILE_PIC
-                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_MESSAGE
                                     , RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DATE
-                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DELIVERED
-                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_NETWORK
+                                    ,RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_PROFILE_PIC
                                     , RecentChatTableDefnDB.RecentChatTableDfn._ID},     // Projection to return
                             null,            // No selection clause
                             null,            // No selection arguments

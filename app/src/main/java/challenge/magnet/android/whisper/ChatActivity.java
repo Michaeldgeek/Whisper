@@ -517,13 +517,13 @@ public class ChatActivity extends ActionBarActivity implements OnMenuItemClickLi
         if (mMenuDialogFragment != null && mMenuDialogFragment.isAdded()) {
             mMenuDialogFragment.dismiss();
         }
-        WhisperDB whisperDB = new WhisperDB(this);
+      /*  WhisperDB whisperDB = new WhisperDB(this);
         SQLiteDatabase sqLiteDatabase = whisperDB.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_PROFILE_PIC,getChatPicture(intent));
         values.put(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DATE, String.valueOf(new Date().getHours()) + ":" + String.valueOf(new Date().getMinutes()));
         values.put(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_USER,getChatUsername(intent));
-        sqLiteDatabase.insert(RecentChatTableDefnDB.RecentChatTableDfn.TABLE_NAME,null,values);
+        sqLiteDatabase.insert(RecentChatTableDefnDB.RecentChatTableDfn.TABLE_NAME,null,values);*/
     }
     private void initMenuFragment() {
         MenuParams menuParams = new MenuParams();

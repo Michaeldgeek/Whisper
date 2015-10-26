@@ -25,12 +25,8 @@ public class MyListItem{
         cursor.moveToFirst();
         MyListItem listItem = new MyListItem();
         listItem.setUserName(cursor.getString(cursor.getColumnIndex(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_USER)));
-        listItem.setMessage(cursor.getString(cursor.getColumnIndex(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_MESSAGE)));
-        listItem.setCircleText(cursor.getString(cursor.getColumnIndex(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_UNREAD_COUNT)));
-        listItem.setInvisible_for_badge_view(cursor.getString(cursor.getColumnIndex(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_NETWORK)));
         listItem.setDate(cursor.getString(cursor.getColumnIndex(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DATE)));
         listItem.setProfilePic(cursor.getString(cursor.getColumnIndex(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_PROFILE_PIC)));
-        listItem.setDelivered(cursor.getString(cursor.getColumnIndex(RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DELIVERED)));
         return listItem;
     }
       else {

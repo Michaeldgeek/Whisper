@@ -72,12 +72,14 @@ public class LoginLoadingActivity extends AppCompatActivity {
     }
 
     private void goToLoginActivity() {
+        finish();
         Intent intent;
         intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
 
     public void goToFindFriendsSelectActivity(String username) {
+        finish();
         Intent intent;
         intent = new Intent(this, FindFriendsSetup.class);
         startActivity(intent);

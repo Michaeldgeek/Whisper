@@ -56,11 +56,9 @@ public class MyListCursorAdapter extends CursorRecyclerViewAdapter<MyListCursorA
     public void onBindViewHolder(ViewHolder viewHolder, Cursor cursor) {
         MyListItem myListItem = MyListItem.fromCursor(cursor);
         viewHolder.username.setText(myListItem.getUserName());
-        viewHolder.message.setText(myListItem.getMessage());
         viewHolder.date.setText(myListItem.getDate());
-        viewHolder.circleText.setText(myListItem.getCircleText());
         //delivered goes here. implementation skipped
         Picasso.with(context).load(myListItem.getProfilePic()).into(viewHolder.profilePic);
-        viewHolder.invisible_for_badge_view.setTag(myListItem.getInvisible_for_badge_view());
+       // viewHolder.invisible_for_badge_view.setTag(myListItem.getInvisible_for_badge_view());
     }
 }

@@ -13,11 +13,7 @@ public class WhisperDB extends SQLiteOpenHelper {
             "CREATE TABLE " + RecentChatTableDefnDB.RecentChatTableDfn.TABLE_NAME + " (" +
                     RecentChatTableDefnDB.RecentChatTableDfn._ID + " INTEGER PRIMARY KEY," +
                     RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DATE + TEXT_TYPE + NOT_NULL  + COMMA_SEP +
-                    RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_MESSAGE + TEXT_TYPE + NOT_NULL  + COMMA_SEP +
-                    RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_DELIVERED + TEXT_TYPE + NOT_NULL  + COMMA_SEP +
-                    RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_NETWORK + TEXT_TYPE + NOT_NULL  + COMMA_SEP +
                     RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_PROFILE_PIC + TEXT_TYPE + NOT_NULL  + COMMA_SEP +
-                    RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_UNREAD_COUNT + TEXT_TYPE + NOT_NULL  + COMMA_SEP +
                     RecentChatTableDefnDB.RecentChatTableDfn.COLUMN_NAME_USER  + TEXT_TYPE + NOT_NULL + " UNIQUE" +
 
             " )";
